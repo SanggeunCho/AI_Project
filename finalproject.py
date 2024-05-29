@@ -7,7 +7,17 @@ import matplotlib.pyplot as plt
 
 # Get data from the file
 file_path = './laptop_price.csv'
-data = pd.read_csv(file_path)
+encodings = ['utf-8', 'latin1', 'iso-8859-1', 'cp1252']
+
+for encoding in encodings:
+    try:
+        data = pd.read_csv(file_path, encoding = encoding)
+        print(f"Successfully read file. Used encoding: {encoding}")
+        break
+    except UnicodeDecodeError:
+        print(f"Encoding {encoding} failed")
+else:
+    print("All encoding attempts failed")
 
 # Data preprocessing
 def convert_memory(memory):
